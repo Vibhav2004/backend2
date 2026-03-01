@@ -56,57 +56,57 @@ public class config {  // class name capitalized by convention
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
-//                .headers(headers -> headers
-//                        .contentSecurityPolicy(csp -> csp
-//                                .policyDirectives(
-//                                        "default-src 'self'; " +
-//                                                "script-src 'self' 'unsafe-inline'; " +
-//                                                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-//                                                "font-src 'self' https://fonts.gstatic.com; " +
-//                                                "img-src 'self' data: https:; " +
-//                                                "connect-src 'self' http://localhost:8081 http://localhost:4321 http://192.168.29.171:8081"
-//
-//                                )
-//                        )
-//                )
+               .headers(headers -> headers
+                       .contentSecurityPolicy(csp -> csp
+                               .policyDirectives(
+                                       "default-src 'self'; " +
+                                               "script-src 'self' 'unsafe-inline'; " +
+                                               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+                                               "font-src 'self' https://fonts.gstatic.com; " +
+                                               "img-src 'self' data: https:; " +
+                                               "connect-src 'self' http://localhost:8081 http://localhost:4321 http://192.168.29.171:8081"
+
+                               )
+                       )
+               )
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
         return http.build();
     }
 
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration config = new CorsConfiguration();
-//        config.setAllowedOrigins(List.of("http://127.0.0.1:5501", "http://localhost:5501","http://192.168.29.171:5501","https://frontend-rust-iota-qby7aguy8j.vercel.app"));
-//        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-//        config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-//        config.setAllowCredentials(true); // allows cookies/sessions
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", config);
-//        return source;
-//    }
+   @Bean
+   public CorsConfigurationSource corsConfigurationSource() {
+       CorsConfiguration config = new CorsConfiguration();
+       config.setAllowedOrigins(List.of("http://127.0.0.1:5501", "http://localhost:5501","http://192.168.29.171:5501","https://frontend-rust-iota-qby7aguy8j.vercel.app","https://swipenow.swipenowin.workers.dev","https://swipenow.in"));
+       config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+       config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+       config.setAllowCredentials(true); // allows cookies/sessions
+
+       UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+       source.registerCorsConfiguration("/**", config);
+       return source;
+   }
 
 
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of(
-                "http://127.0.0.1:5501",
-                "http://localhost:5501",
-                "http://192.168.29.171:5501",
-                "https://frontend-rust-iota-qby7aguy8j.vercel.app",
-                "https://swipenow.swipenowin.workers.dev"
-        ));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*")); // allow all headers
-        config.setAllowCredentials(true);
+//     @Bean
+//     public CorsConfigurationSource corsConfigurationSource() {
+//         CorsConfiguration config = new CorsConfiguration();
+//         config.setAllowedOrigins(List.of(
+//                 "http://127.0.0.1:5501",
+//                 "http://localhost:5501",
+//                 "http://192.168.29.171:5501",
+//                 "https://frontend-rust-iota-qby7aguy8j.vercel.app",
+//                 "https://swipenow.swipenowin.workers.dev"
+//         ));
+//         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//         config.setAllowedHeaders(List.of("*")); // allow all headers
+//         config.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
+//         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//         source.registerCorsConfiguration("/**", config);
+//         return source;
+//     }
 
 }
