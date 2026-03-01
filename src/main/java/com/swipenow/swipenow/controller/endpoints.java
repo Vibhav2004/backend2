@@ -1,5 +1,5 @@
 package com.swipenow.swipenow.controller;
-
+import org.springframework.util.DigestUtils;
 import com.swipenow.swipenow.entity.Friends;
 import com.swipenow.swipenow.entity.Meme;
 import com.swipenow.swipenow.entity.User;
@@ -8,17 +8,20 @@ import com.swipenow.swipenow.repository.UserRepo;
 import com.swipenow.swipenow.service.*;
 //import com.swipenow.swipenow.service.friendService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 
 @RestController
@@ -264,7 +267,20 @@ public class endpoints {
 
     @GetMapping("/daily-memes")
     public ResponseEntity<List<String>> getMemes(@RequestParam String username) throws Exception {
-        return ResponseEntity.ok(memeService.getAllMemes(username));
+        // fetch data
+        List<String> memes = memeService.getAllMemes(username);
+
+        // generate ETag hash
+        String content = memes.toString();
+        String etag = DigestUtils.md5DigestAsHex(content.getBytes(StandardCharsets.UTF_8));
+
+        return ResponseEntity.ok()
+                .eTag(etag)
+                .cacheControl(
+                        CacheControl.maxAge(1, TimeUnit.HOURS) // change if needed
+                                .cachePublic()
+                )
+                .body(memes);
     }
 //    @GetMapping("/daily-memes")
 //    public ResponseEntity<List<String>> getAllMemes() {
