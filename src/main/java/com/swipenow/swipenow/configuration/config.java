@@ -97,7 +97,8 @@ public class config {  // class name capitalized by convention
                 "http://127.0.0.1:5501",
                 "http://localhost:5501",
                 "http://192.168.29.171:5501",
-                "https://frontend-rust-iota-qby7aguy8j.vercel.app"
+                "https://frontend-rust-iota-qby7aguy8j.vercel.app",
+                "https://swipenow.swipenowin.workers.dev"
         ));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*")); // allow all headers
