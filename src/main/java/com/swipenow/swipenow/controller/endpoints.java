@@ -299,7 +299,8 @@ public class endpoints {
             "http://127.0.0.1:5501",
             "http://localhost:5501",
             "http://192.168.29.171:5501",
-            "https://frontend-rust-iota-qby7aguy8j.vercel.app"
+            "https://frontend-rust-iota-qby7aguy8j.vercel.app",
+            "https://swipenow.swipenowin.workers.dev"
     }, allowCredentials = "true")
     public ResponseEntity<String> deleteAccount(@RequestParam String email) {
         return ResponseEntity.ok(userService.deleteAccount(email));

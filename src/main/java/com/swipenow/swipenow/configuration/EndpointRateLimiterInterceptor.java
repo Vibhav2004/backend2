@@ -1,15 +1,110 @@
-package com.swipenow.swipenow.configuration;
+// package com.swipenow.swipenow.configuration;
 
+
+// import org.springframework.stereotype.Component;
+// import org.springframework.web.servlet.HandlerInterceptor;
+
+// import jakarta.servlet.http.HttpServletRequest;
+// import jakarta.servlet.http.HttpServletResponse;
+// import java.time.LocalDate;
+// import java.util.HashMap;
+// import java.util.Map;
+
+// import java.util.concurrent.ConcurrentHashMap;
+
+// @Component
+// public class EndpointRateLimiterInterceptor implements HandlerInterceptor {
+
+//     // ================= PER-ENDPOINT LIMITS =================
+//     private static final Map<String, Integer> ENDPOINT_LIMITS;
+//     static {
+//         ENDPOINT_LIMITS = new HashMap<>();
+//         ENDPOINT_LIMITS.put("/send", 5);
+//         ENDPOINT_LIMITS.put("/verify", 10);
+//         ENDPOINT_LIMITS.put("/update-password", 3);
+//         ENDPOINT_LIMITS.put("/Register-User", 5);
+//         ENDPOINT_LIMITS.put("/Login-User", 20);
+//         ENDPOINT_LIMITS.put("/update", 10);
+//         ENDPOINT_LIMITS.put("/add-friends", 50);
+//         ENDPOINT_LIMITS.put("/view_friends", 100);
+//         ENDPOINT_LIMITS.put("/profile", 50);
+//         ENDPOINT_LIMITS.put("/profile-pic", 10);
+//         ENDPOINT_LIMITS.put("/Get-profile-pic", 100);
+//         ENDPOINT_LIMITS.put("/upload", 20);
+//         ENDPOINT_LIMITS.put("/urls", 200);
+//         ENDPOINT_LIMITS.put("/daily-memes", 300);
+//         ENDPOINT_LIMITS.put("/delete-account", 1);
+//     }
+
+//     // Tracks requests: Map<IP, Map<Endpoint, Counter>>
+//     private final Map<String, Map<String, IpCounter>> ipCounters = new ConcurrentHashMap<>();
+
+//     private static class IpCounter {
+//         int count;
+//         LocalDate date;
+
+//         IpCounter() {
+//             this.count = 1;
+//             this.date = LocalDate.now();
+//         }
+//     }
+
+//     @Override
+//     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+//         String ip = request.getRemoteAddr();
+//         String path = request.getRequestURI();
+
+//         // Normalize path for endpoints with path variables
+//         if (path.startsWith("/view_friends")) path = "/view_friends";
+//         else if (path.startsWith("/profile/")) path = "/profile";
+//         else if (path.startsWith("/urls/")) path = "/urls";
+
+//         // Skip endpoints not in the map
+//         if (!ENDPOINT_LIMITS.containsKey(path)) return true;
+
+//         int limit = ENDPOINT_LIMITS.get(path);
+
+//         ipCounters.computeIfAbsent(ip, k -> new ConcurrentHashMap<>());
+//         Map<String, IpCounter> endpointMap = ipCounters.get(ip);
+
+//         endpointMap.compute(path, (key, counter) -> {
+//             if (counter == null || !counter.date.equals(LocalDate.now())) {
+//                 return new IpCounter();
+//             } else {
+//                 counter.count++;
+//                 return counter;
+//             }
+//         });
+
+//         IpCounter counter = endpointMap.get(path);
+//         if (counter.count > limit) {
+//             response.setStatus(429); // 429
+//             response.getWriter().write(
+//                     "Daily limit reached for IP: " + ip + " on endpoint: " + path +
+//                             " (limit: " + limit + ")"
+//             );
+//             return false;
+//         }
+
+//         return true; // allow request
+//     }
+// }
+
+
+
+
+package com.swipenow.swipenow.configuration;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
-
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
@@ -17,8 +112,10 @@ public class EndpointRateLimiterInterceptor implements HandlerInterceptor {
 
     // ================= PER-ENDPOINT LIMITS =================
     private static final Map<String, Integer> ENDPOINT_LIMITS;
+
     static {
         ENDPOINT_LIMITS = new HashMap<>();
+
         ENDPOINT_LIMITS.put("/send", 5);
         ENDPOINT_LIMITS.put("/verify", 10);
         ENDPOINT_LIMITS.put("/update-password", 3);
@@ -36,7 +133,7 @@ public class EndpointRateLimiterInterceptor implements HandlerInterceptor {
         ENDPOINT_LIMITS.put("/delete-account", 1);
     }
 
-    // Tracks requests: Map<IP, Map<Endpoint, Counter>>
+    // Map<IP, Map<Endpoint, Counter>>
     private final Map<String, Map<String, IpCounter>> ipCounters = new ConcurrentHashMap<>();
 
     private static class IpCounter {
@@ -50,18 +147,73 @@ public class EndpointRateLimiterInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request,
+                             HttpServletResponse response,
+                             Object handler) throws Exception {
 
-        String ip = request.getRemoteAddr();
+        // ================= GET REAL CLIENT IP (RENDER FIX) =================
+        String ip = request.getHeader("X-Forwarded-For");
+
+        if (ip == null || ip.isBlank()) {
+            ip = request.getRemoteAddr();
+        } else {
+            ip = ip.split(",")[0].trim();
+        }
+
+        // ================= GET PATH =================
         String path = request.getRequestURI();
 
-        // Normalize path for endpoints with path variables
-        if (path.startsWith("/view_friends")) path = "/view_friends";
-        else if (path.startsWith("/profile/")) path = "/profile";
-        else if (path.startsWith("/urls/")) path = "/urls";
+        // ================= NORMALIZE ALL DYNAMIC PATHS =================
+        if (path.startsWith("/view_friends")) {
+            path = "/view_friends";
+        }
+        else if (path.startsWith("/profile/")) {
+            path = "/profile";
+        }
+        else if (path.startsWith("/urls/")) {
+            path = "/urls";
+        }
+        else if (path.startsWith("/profile-pic")) {
+            path = "/profile-pic";
+        }
+        else if (path.startsWith("/Get-profile-pic")) {
+            path = "/Get-profile-pic";
+        }
+        else if (path.startsWith("/add-friends")) {
+            path = "/add-friends";
+        }
+        else if (path.startsWith("/update-password")) {
+            path = "/update-password";
+        }
+        else if (path.startsWith("/Register-User")) {
+            path = "/Register-User";
+        }
+        else if (path.startsWith("/Login-User")) {
+            path = "/Login-User";
+        }
+        else if (path.startsWith("/daily-memes")) {
+            path = "/daily-memes";
+        }
+        else if (path.startsWith("/delete-account")) {
+            path = "/delete-account";
+        }
+        else if (path.startsWith("/upload")) {
+            path = "/upload";
+        }
+        else if (path.startsWith("/update")) {
+            path = "/update";
+        }
+        else if (path.startsWith("/verify")) {
+            path = "/verify";
+        }
+        else if (path.startsWith("/send")) {
+            path = "/send";
+        }
 
-        // Skip endpoints not in the map
-        if (!ENDPOINT_LIMITS.containsKey(path)) return true;
+        // ================= SKIP IF NOT IN LIMIT MAP =================
+        if (!ENDPOINT_LIMITS.containsKey(path)) {
+            return true;
+        }
 
         int limit = ENDPOINT_LIMITS.get(path);
 
@@ -78,15 +230,17 @@ public class EndpointRateLimiterInterceptor implements HandlerInterceptor {
         });
 
         IpCounter counter = endpointMap.get(path);
+
         if (counter.count > limit) {
-            response.setStatus(429); // 429
+            response.setStatus(429);
             response.getWriter().write(
-                    "Daily limit reached for IP: " + ip + " on endpoint: " + path +
-                            " (limit: " + limit + ")"
+                    "Daily limit reached for IP: " + ip +
+                    " on endpoint: " + path +
+                    " (limit: " + limit + ")"
             );
             return false;
         }
 
-        return true; // allow request
+        return true;
     }
 }
