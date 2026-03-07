@@ -294,16 +294,20 @@ public class endpoints {
 
 
 
+    // @DeleteMapping("/delete-account")
+    // public ResponseEntity<String> deleteAccount(@RequestParam String email) {
+    //     return ResponseEntity.ok(userService.deleteAccount(email));
+    // }
     @DeleteMapping("/delete-account")
-    @CrossOrigin(origins = {
-            "http://127.0.0.1:5501",
-            "http://localhost:5501",
-            "http://192.168.29.171:5501",
-            "https://frontend-rust-iota-qby7aguy8j.vercel.app",
-            "https://swipenow.swipenowin.workers.dev"
-    }, allowCredentials = "true")
-    public ResponseEntity<String> deleteAccount(@RequestParam String email) {
-        return ResponseEntity.ok(userService.deleteAccount(email));
+    public ResponseEntity<String> deleteAccount(@RequestBody Map<String,String> body) {
+    String email = body.get("email");
+    return ResponseEntity.ok(userService.deleteAccount(email));
+    }
+
+    @GetMapping("/guest-memes")
+    public ResponseEntity<List<String>> getGuestMemes() {
+        List<String> urls = memeService.getGuestMemes();
+        return ResponseEntity.ok(urls);
     }
 
 }

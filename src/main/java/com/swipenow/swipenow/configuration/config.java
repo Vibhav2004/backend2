@@ -175,7 +175,8 @@ public class config {
                             "/urls/**",
                             "/allMEMEs",
                             "/daily-memes",
-                            "/delete-account"
+                            "/delete-account",
+                            "/guest-memes"
                     ).permitAll()
 
                     // everything else protected
@@ -196,6 +197,7 @@ public class config {
                                     "https://swipenow.swipenowin.workers.dev " +
                                     "https://swipenow.in " +
                                     "http://localhost:8081 " +
+                                    "http://127.0.0.1:5501 " +
                                     "http://localhost:4321 " +
                                     "http://192.168.29.171:8081;"
                             )

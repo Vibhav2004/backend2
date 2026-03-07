@@ -104,7 +104,7 @@ public class UserService {
 //
 //
     public List<User> getAllUser() {
-        List<User> allUser=userRepo.findAll();
+        List<User> allUser=userRepo.getUserStats();
         if(allUser.size()==0) {
             throw new UsernameNotFoundException("Users not found");
         }

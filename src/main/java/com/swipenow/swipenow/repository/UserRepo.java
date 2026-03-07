@@ -2,6 +2,7 @@ package com.swipenow.swipenow.repository;
 
 import com.swipenow.swipenow.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,12 @@ public interface UserRepo  extends JpaRepository<User, Long> {
 
 
     User findByUsername(String username);
-
+    
+    @Query(value = """
+        SELECT username, streak, score, swipe
+        FROM users
+        """, nativeQuery = true)
+    List<User> getUserStats();
 
     User findByEmail(String email);
 

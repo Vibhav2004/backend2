@@ -17,5 +17,7 @@ public interface MemeRepo extends JpaRepository<Meme, Long> {
 
     @Query(value = "SELECT * FROM meme ORDER BY meme_id LIMIT :limit OFFSET :offset", nativeQuery = true)
     List<Meme> findBatch(int limit, int offset);
-
+    
+    @Query(value = "SELECT * FROM meme ORDER BY RANDOM() LIMIT 75", nativeQuery = true)
+    List<Meme> getRandomMemes();
 }

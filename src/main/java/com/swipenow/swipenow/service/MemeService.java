@@ -328,4 +328,15 @@ private void createDailyBatch() throws Exception {
 
     dailyBatchRepository.save(batch);
 }
+
+
+
+public List<String> getGuestMemes() {
+
+    List<Meme> memes = memeRepo.getRandomMemes();
+
+    return memes.stream()
+            .map(Meme::getUrl)
+            .toList();
+}
 }
