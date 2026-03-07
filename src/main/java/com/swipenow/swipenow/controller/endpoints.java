@@ -49,7 +49,13 @@ public class endpoints {
         this.repo = repo;
         this.supabaseService = supabaseService;
     }
+    
 
+
+     @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("OK");
+    }
 
 
     @GetMapping("/profile/{username}")
