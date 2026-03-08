@@ -3,6 +3,7 @@ package com.swipenow.swipenow.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.swipenow.swipenow.DTO.UserStatsDTO;
 import com.swipenow.swipenow.entity.DeletedUsers;
 import com.swipenow.swipenow.entity.Friends;
 import com.swipenow.swipenow.entity.User;
@@ -103,12 +104,8 @@ public class UserService {
 //    }
 //
 //
-    public List<User> getAllUser() {
-        List<User> allUser=userRepo.getUserStats();
-        if(allUser.size()==0) {
-            throw new UsernameNotFoundException("Users not found");
-        }
-        return allUser;
+     public List<UserStatsDTO> getLeaderboard() {
+        return userRepo.getLeaderboard();
     }
 
 

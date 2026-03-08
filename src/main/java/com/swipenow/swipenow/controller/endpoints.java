@@ -1,5 +1,7 @@
 package com.swipenow.swipenow.controller;
 import org.springframework.util.DigestUtils;
+
+import com.swipenow.swipenow.DTO.UserStatsDTO;
 import com.swipenow.swipenow.entity.Friends;
 import com.swipenow.swipenow.entity.Meme;
 import com.swipenow.swipenow.entity.User;
@@ -86,9 +88,9 @@ public class endpoints {
    }
 
    @GetMapping("/All-User")
-    public List<User> getAllUser(){
-        return userService.getAllUser();
-   }
+     public List<UserStatsDTO> getLeaderboard() {
+        return userService.getLeaderboard();
+    }
 
     @PostMapping("/add-friends")
     public ResponseEntity<Friends> addFriends(@RequestBody Friends dto) {
