@@ -322,8 +322,8 @@ public User updateUser(User incoming) {
 
     public @Nullable String deleteAccount(String email) {
         User user=userRepo.findByEmail(email);
-        if(user==null) {
-            throw new RuntimeException("Username Does Not Exist");
+       if(email == null || email.isBlank()){
+           throw new RuntimeException("Email required");
         }
         DeletedUsers deletedUsers=new DeletedUsers();
 //        deletedUsers.setId(user.getId());

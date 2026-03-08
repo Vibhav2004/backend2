@@ -306,11 +306,11 @@ public class endpoints {
     // public ResponseEntity<String> deleteAccount(@RequestParam String email) {
     //     return ResponseEntity.ok(userService.deleteAccount(email));
     // }
-    @DeleteMapping("/delete-account")
-    public ResponseEntity<String> deleteAccount(@RequestBody Map<String,String> body) {
-    String email = body.get("email");
+  @DeleteMapping("/delete-account/{email}")
+public ResponseEntity<String> deleteAccount(@PathVariable String email) {
+
     return ResponseEntity.ok(userService.deleteAccount(email));
-    }
+}
 
     @GetMapping("/guest-memes")
     public ResponseEntity<List<String>> getGuestMemes() {
