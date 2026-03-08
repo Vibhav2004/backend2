@@ -175,7 +175,7 @@ public class config {
                             "/urls/**",
                             "/allMEMEs",
                             "/daily-memes",
-                            "/delete-account",
+                            "/delete-account/**",
                             "/guest-memes",
                             "/health"
                     ).permitAll()
