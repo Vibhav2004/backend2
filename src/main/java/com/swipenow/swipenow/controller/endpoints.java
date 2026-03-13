@@ -129,38 +129,38 @@ public class endpoints {
     }
 
 
-    @PostMapping("/send")
-    public String sendOtp(@RequestParam String email) {
-        String otp = otpService.generateOtp(email);
+    // @PostMapping("/send")
+    // public String sendOtp(@RequestParam String email) {
+    //     String otp = otpService.generateOtp(email);
 
-        emailService.sendOtpEmail(email, otp);
-        return "OTP sent successfully to " + email;
-    }
+    //     emailService.sendOtpEmail(email, otp);
+    //     return "OTP sent successfully to " + email;
+    // }
 
+  // @PostMapping("/verify")
+    // public String verifyOtp(@RequestParam String email, @RequestParam String otp) {
+    //     boolean isValid = otpService.verifyOtp(email, otp);
+    //     if (!LocalDate.now().equals(today)) {
+    //         today = LocalDate.now();
+    //         counter.clear();
+    //     }
+    //     String key = email;
+    //     counter.merge(key, 1, Integer::sum);
 
-    @PostMapping("/verify")
-    public String verifyOtp(@RequestParam String email, @RequestParam String otp) {
-        boolean isValid = otpService.verifyOtp(email, otp);
-        if (!LocalDate.now().equals(today)) {
-            today = LocalDate.now();
-            counter.clear();
-        }
-        String key = email;
-        counter.merge(key, 1, Integer::sum);
+    //     if (counter.get(key) > 2) {
+    //         throw new ResponseStatusException(
+    //                 HttpStatus.TOO_MANY_REQUESTS,
+    //                 "Daily limit reached"
+    //         );
+    //     }
+    //     if (isValid) {
+    //         return "OTP verified successfully!";
+    //     } else {
+    //         return "Invalid or expired OTP!";
+    //     }
+    // }
 
-        if (counter.get(key) > 2) {
-            throw new ResponseStatusException(
-                    HttpStatus.TOO_MANY_REQUESTS,
-                    "Daily limit reached"
-            );
-        }
-        if (isValid) {
-            return "OTP verified successfully!";
-        } else {
-            return "Invalid or expired OTP!";
-        }
-    }
-
+  
 
 
 //    @PostMapping("/update-email")
@@ -168,7 +168,7 @@ public class endpoints {
 //        User users= userService.updateEmail(user);
 //        return ResponseEntity.ok(users);
 //    }
-//
+
 //    @PostMapping("/update-username")
 //    public ResponseEntity<User> updateUsername(@RequestBody User user) {
 //        User updatedUser = userService.updateUsername(user);
@@ -176,27 +176,33 @@ public class endpoints {
 //    }
 
 
-    @PostMapping("/update-password")
-    public ResponseEntity<User> updatePassword(@RequestBody User user) {
-        User updatedUser = userService.updatePassword(user);
-        if (!LocalDate.now().equals(today)) {
-            today = LocalDate.now();
-            counter.clear();
-        }
-        String key = user.getUsername();
-        counter.merge(key, 1, Integer::sum);
+//     @PostMapping("/update-password")
+//     public ResponseEntity<User> updatePassword(@RequestBody User user) {
+//         User updatedUser = userService.updatePassword(user);
+//         if (!LocalDate.now().equals(today)) {
+//             today = LocalDate.now();
+//             counter.clear();
+//         }
+//         String key = user.getUsername();
+//         counter.merge(key, 1, Integer::sum);
 
-        if (counter.get(key) > 2) {
-            throw new ResponseStatusException(
-                    HttpStatus.TOO_MANY_REQUESTS,
-                    "Daily limit reached"
-            );
-        }
+//         if (counter.get(key) > 2) {
+//             throw new ResponseStatusException(
+//                     HttpStatus.TOO_MANY_REQUESTS,
+//                     "Daily limit reached"
+//             );
+//         }
 
 
-        return ResponseEntity.ok(updatedUser);
-    }
+//         return ResponseEntity.ok(updatedUser);
+//     }
+@PostMapping("/verify")
+public ResponseEntity<String> verifyCode(@RequestBody String code) {
 
+    String result = userService.verifyCode(code);
+
+    return ResponseEntity.ok(result);
+}
 
 
 

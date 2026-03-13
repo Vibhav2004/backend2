@@ -46,7 +46,7 @@ public class User {
 
     private Integer score = 0;
 
-
+    private String code;
     // profile picture URL/path, optional
     private String pfp;
 
@@ -61,7 +61,7 @@ public class User {
     private LocalDate lastStreakDate;
 
 
-//    private boolean termsandCondition;
+    private boolean termsandCondition;
     private LocalDateTime lastSwipeAt;   // for 20-hour inactivity
     private String fcmToken;
     private LocalDate lastQuotaReset;// for push notifications

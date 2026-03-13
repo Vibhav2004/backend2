@@ -23,7 +23,8 @@ public class UserService {
     public User registerUser(User user) {
         user.setMemes(0);
         user.setBatchNumber(0);
-//        user.setTermsAndCondition(true);
+        
+ user.setTermsAndCondition(true);
        return userRepo.save(user);
     }
 
