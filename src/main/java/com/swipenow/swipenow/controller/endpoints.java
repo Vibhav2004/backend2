@@ -196,12 +196,24 @@ public class endpoints {
 
 //         return ResponseEntity.ok(updatedUser);
 //     }
+// @PostMapping("/verify")
+// public ResponseEntity<String> verifyCode(@RequestBody String code) {
+
+//     String result = userService.verifyCode(code);
+
+//     return ResponseEntity.ok(result);
+// }
+
 @PostMapping("/verify")
 public ResponseEntity<String> verifyCode(@RequestBody String code) {
 
-    String result = userService.verifyCode(code);
+    boolean valid = userService.verifyCode(code);
 
-    return ResponseEntity.ok(result);
+    if(valid){
+        return ResponseEntity.ok("OK");
+    }
+
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Code");
 }
 
 

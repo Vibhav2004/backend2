@@ -61,11 +61,12 @@ public class User {
     private LocalDate lastStreakDate;
 
 
-    private boolean termsandCondition;
+    private boolean termsAndCondition;
     private LocalDateTime lastSwipeAt;   // for 20-hour inactivity
     private String fcmToken;
     private LocalDate lastQuotaReset;// for push notifications
     @Column(nullable = false)
     private Integer BatchNumber;
     private LocalDate lastBatchDate;
+   
 }

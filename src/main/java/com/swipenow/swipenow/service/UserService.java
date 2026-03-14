@@ -343,5 +343,27 @@ public User updateUser(User incoming) {
           return "Account Deleted Successfully";
 
     }
+
+    //  public String verifyCode(String code) {
+
+    //     User user = userRepo.findByCode(code);
+    //     if (user == null) {
+    //         return "Invalid code";
+    //     }
+    //     return "Code verified successfully for user: " + user.getUsername();
+       
+    // }
+    public boolean verifyCode(String code) {
+
+    User user = userRepo.findByCode(code);
+
+    if (user == null) {
+        return false;
+    }
+
+    return true;
+}
+
+  
 }
 
