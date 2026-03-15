@@ -29,7 +29,7 @@ public class SupaBaseService {
 
     // Use service_role key for uploads
     private final String SUPABASE_URL = "https://marjfmmbeuektmtvjkiq.supabase.co";
-    private final String SUPABASE_SERVICE_ROLE_KEY = "s";
+    // private final String SUPABASE_SERVICE_ROLE_KEY = "s";
     private final String BUCKET = "MEME";
 
     public SupaBaseService(MemeRepo memeRepository) {
