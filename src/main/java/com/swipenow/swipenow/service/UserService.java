@@ -24,7 +24,7 @@ public class UserService {
         user.setMemes(0);
         user.setBatchNumber(0);
         
- user.setTermsAndCondition(true);
+
        return userRepo.save(user);
     }
 
