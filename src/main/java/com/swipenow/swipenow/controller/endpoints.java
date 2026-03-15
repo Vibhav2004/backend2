@@ -204,8 +204,20 @@ public class endpoints {
 //     return ResponseEntity.ok(result);
 // }
 
+// @PostMapping("/verify")
+// public ResponseEntity<String> verifyCode(@RequestBody String code) {
+
+//     boolean valid = userService.verifyCode(code);
+
+//     if(valid){
+//         return ResponseEntity.ok("OK");
+//     }
+
+//     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Code");
+// }
+
 @PostMapping("/verify")
-public ResponseEntity<String> verifyCode(@RequestBody String code) {
+public ResponseEntity<String> verifyCode(@RequestParam String code) {
 
     boolean valid = userService.verifyCode(code);
 
@@ -215,8 +227,6 @@ public ResponseEntity<String> verifyCode(@RequestBody String code) {
 
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid Code");
 }
-
-
 
 
 //    @PostMapping("/fcm-token")

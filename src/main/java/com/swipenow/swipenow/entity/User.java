@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(
         name = "USERS",
@@ -28,7 +30,8 @@ public class User {
 
     @Column(nullable = false)
     private String email;
-
+    
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
