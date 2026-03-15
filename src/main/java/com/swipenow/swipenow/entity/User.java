@@ -61,7 +61,7 @@ public class User {
     private LocalDate lastStreakDate;
 
 
-    private boolean termsAndCondition;
+    private Boolean termsAndCondition;
     private LocalDateTime lastSwipeAt;   // for 20-hour inactivity
     private String fcmToken;
     private LocalDate lastQuotaReset;// for push notifications

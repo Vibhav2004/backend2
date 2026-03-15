@@ -174,12 +174,12 @@ public class config {
                             "/upload",
                             "/urls/**",
                             "/allMEMEs",
-                            "/daily-memes",
+
                             "/delete-account/**",
                             "/guest-memes",
                             "/health"
                     ).permitAll()
-
+                    .requestMatchers(HttpMethod.GET, "/daily-memes").permitAll()
                     // everything else protected
                     .anyRequest().authenticated()
             )
@@ -194,6 +194,8 @@ public class config {
                                     "font-src 'self' https://fonts.gstatic.com; " +
                                     "img-src 'self' data: https:; " +
                                     "connect-src 'self' " +
+
+                                            "https://backend2-kpkg.onrender.com " +
                                     "https://backend2-4uxe.onrender.com " +
                                     "https://swipenow.swipenowin.workers.dev " +
                                     "https://swipenow.in " +
