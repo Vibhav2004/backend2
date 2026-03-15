@@ -160,7 +160,7 @@ public class config {
                             "/profile-pic",
                             "/Get-profile-pic",
                             "/send",
-                            "/verify",
+                            "/verify/**",
                             "/update-password",
                             "/update-username",
                             "/update-email",
