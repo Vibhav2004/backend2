@@ -5,6 +5,7 @@ import com.swipenow.swipenow.DTO.UserStatsDTO;
 import com.swipenow.swipenow.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -36,9 +37,10 @@ public interface UserRepo  extends JpaRepository<User, Long> {
 
     List<User> findByLastSwipeAtBeforeAndFcmTokenIsNotNull(LocalDateTime limit);
 
-    @Query(value = """
-            SELECT username, streak, score, swipes ,memes, friends
-            FROM users
-            """, nativeQuery = true)
-    UserProfileDTO FindUser(String username);
+@Query(value = """
+        SELECT username, streak, score, swipes, memes, friends, pfp
+        FROM USERS
+        WHERE username = :username
+        """, nativeQuery = true)
+UserProfileDTO FindUser(@Param("username") String username);
 }
