@@ -8,6 +8,8 @@ public interface UserProfileDTO {
 
     Integer getScore();
 
+    String getEmail();
+
     Integer getSwipes();
 
     Integer getMemes();

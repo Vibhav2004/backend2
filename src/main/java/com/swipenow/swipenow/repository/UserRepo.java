@@ -38,7 +38,7 @@ public interface UserRepo  extends JpaRepository<User, Long> {
     List<User> findByLastSwipeAtBeforeAndFcmTokenIsNotNull(LocalDateTime limit);
 
 @Query(value = """
-        SELECT username, streak, score, swipes, memes, friends, pfp
+        SELECT username,email, streak, score, swipes, memes, friends, pfp
         FROM USERS
         WHERE username = :username
         """, nativeQuery = true)
