@@ -61,8 +61,8 @@ public class endpoints {
 
 
     @GetMapping("/profile/{username}")
-    public ResponseEntity<User> getUser(@PathVariable String username){
-        User user= userService.getUser(username);
+    public ResponseEntity<UserStatsDTO> getUser(@PathVariable String username){
+        UserStatsDTO user= userService.getUser(username);
         return ResponseEntity.ok(user);
     }
 

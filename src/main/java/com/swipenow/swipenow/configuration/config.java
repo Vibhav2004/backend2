@@ -179,6 +179,7 @@ public class config {
                             "/guest-memes",
                             "/health"
                     ).permitAll()
+                    .requestMatchers(HttpMethod.POST, "/verify").permitAll()
                     .requestMatchers(HttpMethod.GET, "/daily-memes").permitAll()
                     // everything else protected
                     .anyRequest().authenticated()

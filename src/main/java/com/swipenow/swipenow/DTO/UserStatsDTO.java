@@ -9,4 +9,8 @@ public interface UserStatsDTO {
     Integer getScore();
 
     Integer getSwipes();
+
+    Integer getMemes();
+
+    Integer getFriends();
 }

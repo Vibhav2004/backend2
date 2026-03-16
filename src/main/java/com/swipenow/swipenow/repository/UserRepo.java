@@ -34,4 +34,10 @@ public interface UserRepo  extends JpaRepository<User, Long> {
      @Query("SELECT u FROM User u WHERE u.lastSwipeAt < :limit AND u.fcmToken IS NOT NULL")
 
     List<User> findByLastSwipeAtBeforeAndFcmTokenIsNotNull(LocalDateTime limit);
+
+    @Query(value = """
+            SELECT username, streak, score, swipes ,memes, friends
+            FROM users
+            """, nativeQuery = true)
+    UserStatsDTO FindUser(String username);
 }

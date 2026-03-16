@@ -43,68 +43,15 @@ public class UserService {
     }
 
 
-    public User getUser(String username) {
-        User usersExist=userRepo.findByUsername(username);
+    public UserStatsDTO getUser(String username) {
+        UserStatsDTO usersExist=userRepo.FindUser(username);
         if(usersExist==null){
             throw new RuntimeException("Username Does Not Exist");
         }
         return usersExist;
     }
 
-//    public User updateUser(User incoming) {
-//
-//        User existing = userRepo.findByUsername(incoming.getUsername());
-//
-//        if (existing == null) {
-//            throw new RuntimeException("User not found");
-//        }
-//
-//        // =========================
-//        // NULL SAFETY
-//        // =========================
-//        int existingSwipes = existing.getSwipes() == null ? 0 : existing.getSwipes();
-//        int existingScore  = existing.getScore()  == null ? 0 : existing.getScore();
-//        Integer existingStreakObj = existing.getStreak();
-//
-//        int incomingSwipes = incoming.getSwipes() == null ? 0 : incoming.getSwipes();
-//        int incomingStreak = incoming.getStreak() == null ? 0 : incoming.getStreak();
-//        int incomingScore  = incoming.getScore()  == null ? 0 : incoming.getScore();
-//
-//        // =========================
-//        // SWIPES
-//        // =========================
-//        existing.setSwipes(existingSwipes + incomingSwipes);
-//
-//        // =========================
-//        // STREAK (SERVER-TRUSTED)
-//        // =========================
-//        LocalDate today = LocalDate.now();
-//        LocalDate lastIncrement = existing.getLastStreakDate();
-//
-//        boolean alreadyIncrementedToday =
-//                lastIncrement != null && lastIncrement.isEqual(today);
-//
-//        if (incomingStreak > 0 && !alreadyIncrementedToday) {
-//
-//            if (existingStreakObj == null || existingStreakObj == 0) {
-//                existing.setStreak(1);
-//            } else {
-//                existing.setStreak(existingStreakObj + 1); // ALWAYS +1 (ignore frontend value)
-//            }
-//
-//            existing.setLastStreakDate(today);
-//        }
-//        // else: do nothing (frontend cannot force increment)
-//
-//        // =========================
-//        // SCORE
-//        // =========================
-//        existing.setScore(existingScore + incomingScore);
-//
-//        return userRepo.save(existing);
-//    }
-//
-//
+
      public List<UserStatsDTO> getLeaderboard() {
         return userRepo.getLeaderboard();
     }
