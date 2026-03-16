@@ -43,8 +43,8 @@ public class UserService {
     }
 
 
-    public UserStatsDTO getUser(String username) {
-        UserStatsDTO usersExist=userRepo.FindUser(username);
+    public User getUser(String username) {
+        User usersExist=userRepo.findByUsername(username);
         if(usersExist==null){
             throw new RuntimeException("Username Does Not Exist");
         }
