@@ -3,6 +3,7 @@ package com.swipenow.swipenow.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.swipenow.swipenow.DTO.UserProfileDTO;
 import com.swipenow.swipenow.DTO.UserStatsDTO;
 import com.swipenow.swipenow.entity.DeletedUsers;
 import com.swipenow.swipenow.entity.Friends;
@@ -43,8 +44,8 @@ public class UserService {
     }
 
 
-    public User getUser(String username) {
-        User usersExist=userRepo.findByUsername(username);
+    public UserProfileDTO getUser(String username) {
+        UserProfileDTO usersExist=userRepo.FindUser(username);
         if(usersExist==null){
             throw new RuntimeException("Username Does Not Exist");
         }
@@ -57,67 +58,6 @@ public class UserService {
     }
 
 
-//    public User updateUser(User incoming) {
-//
-//        User existing = userRepo.findByUsername(incoming.getUsername());
-//
-//        if (existing == null) {
-//            throw new RuntimeException("User not found");
-//        }
-//
-//        // =========================
-//        // NULL SAFETY
-//        // =========================
-//        int existingSwipes = existing.getSwipes() == null ? 0 : existing.getSwipes();
-//        int existingScore  = existing.getScore()  == null ? 0 : existing.getScore();
-//        Integer existingStreakObj = existing.getStreak();
-//
-//        int incomingSwipes = incoming.getSwipes() == null ? 0 : incoming.getSwipes();
-//        int incomingStreak = incoming.getStreak() == null ? 0 : incoming.getStreak();
-//        int incomingScore  = incoming.getScore()  == null ? 0 : incoming.getScore();
-//
-//        // =========================
-//        // SWIPES
-//        // =========================
-//        existing.setSwipes(existingSwipes + incomingSwipes);
-//
-//        // =========================
-//        // STREAK RESET CHECK (🔥 NEW)
-//        // =========================
-//        LocalDate today = LocalDate.now();
-//        LocalDate lastIncrement = existing.getLastStreakDate();
-//
-//        if (lastIncrement != null && lastIncrement.isBefore(today.minusDays(1))) {
-//            // Missed at least one full day → reset streak
-//            existing.setStreak(0);
-//            existingStreakObj = 0; // keep local variable in sync
-//        }
-//
-//        // =========================
-//        // STREAK (SERVER-TRUSTED)
-//        // =========================
-//        boolean alreadyIncrementedToday =
-//                lastIncrement != null && lastIncrement.isEqual(today);
-//
-//        if (incomingStreak > 0 && !alreadyIncrementedToday) {
-//
-//            if (existingStreakObj == null || existingStreakObj == 0) {
-//                existing.setStreak(1);
-//            } else {
-//                existing.setStreak(existingStreakObj + 1); // ALWAYS +1
-//            }
-//
-//            existing.setLastStreakDate(today);
-//        }
-//        // else: do nothing
-//
-//        // =========================
-//        // SCORE
-//        // =========================
-//        existing.setScore(existingScore + incomingScore);
-//
-//        return userRepo.save(existing);
-//    }
 public User updateUser(User incoming) {
 
     User existing = userRepo.findByUsername(incoming.getUsername());
@@ -193,14 +133,7 @@ public User updateUser(User incoming) {
 
 
 
-//    public User setProfilepic(User user) {
-//        User user1 = userRepo.findByUsername(user.getUsername());
-//        if(user1 == null) {
-//            throw new RuntimeException("Username Does Not Exist");
-//        }
-//        user1.setPfp(user.getPfp());
-//        return userRepo.save(user1);
-//    }
+
 
 
     public String getProfilePic(User user) {

@@ -1,6 +1,7 @@
 package com.swipenow.swipenow.controller;
 import org.springframework.util.DigestUtils;
 
+import com.swipenow.swipenow.DTO.UserProfileDTO;
 import com.swipenow.swipenow.DTO.UserStatsDTO;
 import com.swipenow.swipenow.entity.Friends;
 import com.swipenow.swipenow.entity.Meme;
@@ -61,8 +62,8 @@ public class endpoints {
 
 
     @GetMapping("/profile/{username}")
-    public ResponseEntity<UserStatsDTO> getUser(@PathVariable String username){
-        UserStatsDTO user= userService.getUser(username);
+    public ResponseEntity<UserProfileDTO> getUser(@PathVariable String username){
+        UserProfileDTO user= userService.getUser(username);
         return ResponseEntity.ok(user);
     }
 
@@ -98,11 +99,7 @@ public class endpoints {
         return ResponseEntity.ok(saved);
     }
 
-//    @PostMapping("/remove-friends")
-//    public ResponseEntity<Friends> removeFriends(@RequestBody Friends dto) {
-//        Friends saved = friendService.removeFriends(dto);
-//        return ResponseEntity.ok(saved);
-//    }
+
 
     @GetMapping("/friends/check")
     public ResponseEntity<Boolean> checkFriendship(
