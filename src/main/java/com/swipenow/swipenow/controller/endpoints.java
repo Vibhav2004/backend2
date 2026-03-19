@@ -214,11 +214,19 @@ public class endpoints {
 // }
 
 @PostMapping("/verify")
-public ResponseEntity<String> verifyCode(@RequestParam String code) {
+public ResponseEntity<String> verifyCode(@RequestBody Map<String, String> body) {
 
-    boolean valid = userService.verifyCode(code);
+    String username = body.get("username");
+    String code = body.get("code");
 
-    if(valid){
+    // safety check
+    if (username == null || code == null) {
+        return ResponseEntity.badRequest().body("Missing data");
+    }
+
+    boolean valid = userService.verifyCode(username, code);
+
+    if (valid) {
         return ResponseEntity.ok("OK");
     }
 
@@ -226,44 +234,7 @@ public ResponseEntity<String> verifyCode(@RequestParam String code) {
 }
 
 
-//    @PostMapping("/fcm-token")
-//    public ResponseEntity<String> saveToken(@RequestBody Map<String, String> body) {
-//
-//        String token = body.get("token");
-//
-//        if (token == null || token.isBlank()) {
-//            return ResponseEntity.badRequest().body("FCM token missing");
-//        }
-//
-//        Long userId = 1L; // TODO: replace with authenticated user
-//        User user = repo.findById(userId)
-//                .orElseThrow(() -> new RuntimeException("User not found"));
-//
-//        user.setFcmToken(token);
-//        repo.save(user);
-//
-//        return ResponseEntity.ok("FCM token saved");
-//    }
-//
-//    // ===============================
-//    // RECORD SWIPE
-//    // ===============================
-//    @PostMapping("/swipe")
-//    public ResponseEntity<String> swipe() {
-//
-//        Long userId = 1L; // TODO: replace with authenticated user
-//        User user = repo.findById(userId)
-//                .orElseThrow(() -> new RuntimeException("User not found"));
-//
-//        user.setLastSwipeAt(LocalDateTime.now());
-//
-//        Integer swipes = user.getSwipes();
-//        user.setSwipes(swipes == null ? 1 : swipes + 1);
-//
-//        repo.save(user);
-//
-//        return ResponseEntity.ok("Swipe recorded");
-//    }
+
 
 
 

@@ -233,13 +233,13 @@ public User updateUser(User incoming) {
     //     return "Code verified successfully for user: " + user.getUsername();
        
     // }
-    public boolean verifyCode(String code) {
+   public boolean verifyCode(String username, String code) {
 
-    User user = userRepo.findByCode(code);
+    User user = userRepo.findByUsername(username);
 
-    if (user == null) {
-        return false;
-    }
+    if (user == null) return false;
+
+    if (!code.equals(user.getCode())) return false;
 
     return true;
 }
