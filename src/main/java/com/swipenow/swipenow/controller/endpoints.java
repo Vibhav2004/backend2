@@ -173,26 +173,26 @@ public class endpoints {
 //    }
 
 
-//     @PostMapping("/update-password")
-//     public ResponseEntity<User> updatePassword(@RequestBody User user) {
-//         User updatedUser = userService.updatePassword(user);
-//         if (!LocalDate.now().equals(today)) {
-//             today = LocalDate.now();
-//             counter.clear();
-//         }
-//         String key = user.getUsername();
-//         counter.merge(key, 1, Integer::sum);
+    @PostMapping("/update-password")
+    public ResponseEntity<User> updatePassword(@RequestBody User user) {
+        User updatedUser = userService.updatePassword(user);
+        if (!LocalDate.now().equals(today)) {
+            today = LocalDate.now();
+            counter.clear();
+        }
+        String key = user.getUsername();
+        counter.merge(key, 1, Integer::sum);
 
-//         if (counter.get(key) > 2) {
-//             throw new ResponseStatusException(
-//                     HttpStatus.TOO_MANY_REQUESTS,
-//                     "Daily limit reached"
-//             );
-//         }
+        if (counter.get(key) > 2) {
+            throw new ResponseStatusException(
+                    HttpStatus.TOO_MANY_REQUESTS,
+                    "Daily limit reached");
+
+        }
 
 
-//         return ResponseEntity.ok(updatedUser);
-//     }
+        return ResponseEntity.ok(updatedUser);
+    }
 // @PostMapping("/verify")
 // public ResponseEntity<String> verifyCode(@RequestBody String code) {
 
